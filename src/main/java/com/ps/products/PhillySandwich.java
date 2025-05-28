@@ -1,8 +1,8 @@
-package com.ps;
+package com.ps.products;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class PhillySandwich extends Sandwich{
+public class PhillySandwich extends Sandwich {
     public PhillySandwich(String bread, int size, ArrayList<Topping> toppings, boolean toasted) {
         super(bread, size, toppings, toasted);
     }

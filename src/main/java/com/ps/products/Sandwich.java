@@ -1,9 +1,18 @@
-package com.ps;
+package com.ps.products;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Sandwich implements Product{
+public class Sandwich implements Product {
     private String bread;
+    public static final ArrayList<String> sizes = new ArrayList<>(
+            Arrays.asList(
+                    "Small",
+                    "Medium",
+                    "Large"
+            )
+    );
+    public static final int BASE_SIZE = 4;
     private int size;
     private ArrayList<Topping> toppings;
     private boolean toasted;

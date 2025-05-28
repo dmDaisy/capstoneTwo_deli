@@ -1,6 +1,6 @@
-package com.ps;
+package com.ps.products;
 
-public class Chips implements Product{
+public class Chips implements Product {
     private final double CHIPS_PRICE = 1.5;
 
     @Override

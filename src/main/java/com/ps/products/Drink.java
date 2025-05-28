@@ -1,6 +1,6 @@
-package com.ps;
+package com.ps.products;
 
-public class Drink implements Product{
+public class Drink implements Product {
     private final double S_PRICE = 2;
     private final double M_PRICE = 2.5;
     private final double L_PRICE = 3;
