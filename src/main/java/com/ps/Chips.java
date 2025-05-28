@@ -1,8 +1,10 @@
 package com.ps;
 
 public class Chips implements Product{
+    private final double CHIPS_PRICE = 1.5;
+
     @Override
     public double calcPrice() {
-        return 0;
+        return CHIPS_PRICE;
     }
 }

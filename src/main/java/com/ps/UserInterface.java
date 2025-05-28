@@ -15,7 +15,7 @@ public class UserInterface {
     }
 
     public void display(){
-        System.out.println("Welcome to the \"DELI-cious\" home screen!" +
+        System.out.println("Welcome to the \"DELI-cious\" home page!" +
                 "\n1) New Order" +
                 "\n0) Exit" +
                 "\nChoose your option: ");
@@ -40,7 +40,28 @@ public class UserInterface {
     }
 
     private void processNewOrderRequest(){
-        System.out.println("Welcome to order screen! ");
+        System.out.println("\nWelcome to order page! " +
+                "\n1) Add sandwich" +
+                "\n2) Add a signature sandwich" +
+                "\n3) Add drink" +
+                "\n4) Add chips" +
+                "\n5) Checkout" +
+                "\n0) Cancel order" +
+                "\nChoose your option: ");
+
+    }
+
+    private void processAddSandwichRequest(){
+        System.out.println("Let's customize your sandwich!" +
+                "\nSelect your bread(white, wheat, rye or wrap): ");
+        System.out.println("Select the size(4, 8 or 12): ");
+        System.out.println("Select topping(s): ");
+        processSelectToppingsRequest();
+        System.out.println("Would you like your sandwich toasted? ");
+    }
+
+    private void processSelectToppingsRequest(){
+
     }
 
     private void checkout(){
