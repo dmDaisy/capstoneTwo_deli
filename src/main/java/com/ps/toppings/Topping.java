@@ -1,4 +1,4 @@
-package com.ps.products;
+package com.ps.toppings;
 
 public abstract class Topping {
     private String name;
@@ -12,6 +12,11 @@ public abstract class Topping {
     }
 
     public void setName(String name) { this.name = name; }
+
+    @Override
+    public String toString() {
+        return "\n" + getName();
+    }
 
     public abstract double getPrice();
 }

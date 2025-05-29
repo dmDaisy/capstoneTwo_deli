@@ -1,24 +1,30 @@
 package com.ps.products;
 
+import java.util.*;
+
 public class Drink implements Product {
-    private final double S_PRICE = 2;
-    private final double M_PRICE = 2.5;
-    private final double L_PRICE = 3;
+    private static final Map<String, Double> SIZE_PRICES_MAP = Map.of(
+            "Small", 2.0,
+            "Medium", 2.5,
+            "Large", 3.0
+    );
+
+    public static final ArrayList<String> sizes = new ArrayList<>(SIZE_PRICES_MAP.keySet());
+
     private String size;
 
-    public Drink(String size) {
+    public Drink(String size) { this.size = size; }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
         this.size = size;
     }
 
     @Override
     public double calcPrice() {
-        String size = this.size.toUpperCase();
-        double price = switch (size) {
-            case "S" -> S_PRICE;
-            case "M" -> M_PRICE;
-            case "L" -> L_PRICE;
-            default -> throw new IllegalArgumentException("Invalid size: " + size);
-        };
-        return price;
+        return SIZE_PRICES_MAP.get(size);
     }
 }

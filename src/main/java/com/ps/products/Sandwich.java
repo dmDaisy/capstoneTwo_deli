@@ -1,18 +1,31 @@
 package com.ps.products;
 
+import com.ps.toppings.Topping;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Sandwich implements Product {
-    private String bread;
     public static final ArrayList<String> sizes = new ArrayList<>(
             Arrays.asList(
-                    "Small",
-                    "Medium",
-                    "Large"
+                "Small",
+                "Medium",
+                "Large"
+            )
+    );
+    public static final ArrayList<String> breads = new ArrayList<>(
+            Arrays.asList(
+                "White",
+                "Wheat",
+                "Rye",
+                "Wrap"
             )
     );
     public static final int BASE_SIZE = 4;
+    private static final double BREAD_BASE_PRICE = 4;
+    private static final double BREAD_INCREMENT_PRICE = 1.5;
+
+    private String bread;
     private int size;
     private ArrayList<Topping> toppings;
     private boolean toasted;
@@ -26,7 +39,12 @@ public class Sandwich implements Product {
 
     @Override
     public double calcPrice() {
-        return 0;
+        double sum = 0;
+        int multiple = size / BASE_SIZE; // 1, 2, 3
+        sum += BREAD_BASE_PRICE + BREAD_INCREMENT_PRICE * multiple;
+        double toppingsBasePrice = toppings.stream().mapToDouble(Topping::getPrice).sum();
+        sum += toppingsBasePrice * multiple;
+        return sum;
     }
 
     public String getBread() {
@@ -63,11 +81,10 @@ public class Sandwich implements Product {
 
     @Override
     public String toString() {
-        return "Sandwich{" +
-                "bread='" + bread + '\'' +
-                ", size=" + size +
-                ", toppings=" + toppings +
-                ", toasted=" + toasted +
-                '}';
+        return "Bread type: " + bread + "\n" +
+                "Size: " + size + "\n" +
+                "Toasted: " + (toasted ? "Yes" : "No") + "\n" +
+                "Toppings: " + toppings + "\n" +
+                "Price: " + calcPrice();
     }
 }

@@ -1,4 +1,4 @@
-package com.ps.products;
+package com.ps.toppings;
 
 import java.util.*;
 
@@ -55,5 +55,10 @@ public class PremiumTopping extends Topping {
                 price *= 0.4;
         }
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + (isExtra ? ": Extra" : "");
     }
 }

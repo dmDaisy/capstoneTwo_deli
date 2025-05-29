@@ -4,29 +4,19 @@ import com.ps.products.Product;
 import java.util.ArrayList;
 
 public class Order {
-    private String customerName;
-    private String phoneNumber;
+    private int phoneNumber;
     private ArrayList<Product> cart;
 
-    public Order(String customerName, String phoneNumber, ArrayList<Product> cart) {
-        this.customerName = customerName;
-        this.phoneNumber = phoneNumber;
+    public Order(ArrayList<Product> cart) {
+        this.phoneNumber = 0;
         this.cart = cart;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getPhoneNumber() {
+    public int getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -40,10 +30,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "customerName='" + customerName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", cart=" + cart +
-                '}';
+        return "Order details: " +
+                "\nPhone number: " + phoneNumber +
+                "\nItems ordered: " + cart;
     }
 }

@@ -1,4 +1,4 @@
-package com.ps.products;
+package com.ps.toppings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +36,7 @@ public class RegularTopping extends Topping {
     }
 
     @Override
-    public double getPrice() {
+    public double getPrice(){
         return 0;
     }
 }
