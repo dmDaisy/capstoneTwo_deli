@@ -1,11 +1,13 @@
 package com.ps.products;
 
+import com.ps.toppings.PremiumTopping;
 import com.ps.toppings.Topping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Sandwich implements Product {
+    public static final String PACKAGE_NAME = "com.ps.products";
     public static final ArrayList<String> sizes = new ArrayList<>(
             Arrays.asList(
                 "Small",
@@ -19,6 +21,12 @@ public class Sandwich implements Product {
                 "Wheat",
                 "Rye",
                 "Wrap"
+            )
+    );
+    public static final ArrayList<String> signatureSandwichs = new ArrayList<>(
+            Arrays.asList(
+                    "BLT",
+                    "PhillySandwich"
             )
     );
     public static final int BASE_SIZE = 4;

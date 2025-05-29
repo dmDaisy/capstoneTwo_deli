@@ -28,10 +28,18 @@ public class Order {
         this.cart = cart;
     }
 
+    public double calcTotalPrice(){
+        double totalPrice = 0;
+        for (Product product : cart)
+            totalPrice += product.calcPrice();
+        return totalPrice;
+    }
+
     @Override
     public String toString() {
         return "Order details: " +
                 "\nPhone number: " + phoneNumber +
-                "\nItems ordered: " + cart;
+                "\nItems ordered: " + cart +
+                "\nTotal price: " + calcTotalPrice();
     }
 }

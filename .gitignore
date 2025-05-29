@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### avoiding committing generated receipts to remote git repo ###
+receipts/

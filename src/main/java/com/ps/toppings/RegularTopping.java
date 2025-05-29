@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RegularTopping extends Topping {
-    public static final ArrayList<String> regularToppings = new ArrayList<>(
+    public static final ArrayList<String> veggieToppings = new ArrayList<>(
             Arrays.asList(
                     "Lettuce",
                     "Peppers",
@@ -14,13 +14,23 @@ public class RegularTopping extends Topping {
                     "Cucumbers",
                     "Pickles",
                     "Guacamole",
-                    "Mushrooms",
+                    "Mushrooms"
+            )
+    );
+
+    public static final ArrayList<String> sauceToppings = new ArrayList<>(
+            Arrays.asList(
                     "Mayo",
                     "Mustard",
                     "Ketchup",
                     "Ranch",
                     "Thousand Islands",
-                    "Vinaigrette",
+                    "Vinaigrette"
+            )
+    );
+
+    public static final ArrayList<String> sideToppings = new ArrayList<>(
+            Arrays.asList(
                     "Side: Au jus",
                     "Side: Mayo",
                     "Side: Mustard",
