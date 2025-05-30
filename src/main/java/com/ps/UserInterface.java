@@ -49,7 +49,7 @@ public class UserInterface {
         int choice;
         boolean running = true;
         while (running){
-            System.out.println("Welcome to order page! " +
+            System.out.println(SEPARATION_LINE + "\nWelcome to order page! " +
                     "\n1) Add sandwich" +
                     "\n2) Add a signature sandwich" +
                     "\n3) Add drink" +
