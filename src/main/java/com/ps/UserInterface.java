@@ -8,7 +8,7 @@ import java.util.stream.*;
 
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
-    private final String SEPARATION_LINE = "\n------------------------------";
+    private final String SEPARATION_LINE = "------------------------------";
     private Order order;
 
     public UserInterface(){
@@ -23,7 +23,7 @@ public class UserInterface {
         int choice;
         boolean running = true;
         while (running){
-            System.out.print(SEPARATION_LINE + "\nWelcome to the \"DELI-cious\" home page!" +
+            System.out.println(SEPARATION_LINE + "\nWelcome to the \"DELI-cious\" home page!" +
                     "\n1) New Order" +
                     "\n0) Exit" +
                     "\nChoose your option: ");
@@ -49,7 +49,7 @@ public class UserInterface {
         int choice;
         boolean running = true;
         while (running){
-            System.out.print(SEPARATION_LINE + "\nWelcome to order page! " +
+            System.out.println("Welcome to order page! " +
                     "\n1) Add sandwich" +
                     "\n2) Add a signature sandwich" +
                     "\n3) Add drink" +
@@ -103,7 +103,7 @@ public class UserInterface {
 
         Sandwich sandwich = new Sandwich(bread, size, toppings, toasted);
         order.getCart().add(0, sandwich);
-        System.out.println("The following sandwich is added to your order: " + SEPARATION_LINE + sandwich);
+        System.out.println("The following sandwich is added to your order: \n" + SEPARATION_LINE + sandwich);
     }
 
     private ArrayList<Topping> processSelectToppingsRequest() throws IOException {
@@ -151,7 +151,7 @@ public class UserInterface {
         if(choiceIndex < 0) return; // didn't choose
         // get a clone of the chosen signature sandwich
         SignatureSandwich chosen = SignatureSandwich.getMenu().get(choiceIndex).clone();
-        System.out.println("Here are the " + chosen.getSignatureName() + " sandwich details: " + SEPARATION_LINE + chosen);
+        System.out.println("Here are the " + chosen.getSignatureName() + " sandwich details: \n" + SEPARATION_LINE + chosen);
         // customization
         customizeSandwich(chosen);
         order.getCart().add(0, chosen);
@@ -206,7 +206,7 @@ public class UserInterface {
         boolean running = true;
         while (running){
             System.out.println(order);
-            System.out.print(SEPARATION_LINE +
+            System.out.println(SEPARATION_LINE +
                     "\n1) Confirm checkout" +
                     "\n2) Remove an item" +
                     "\n3) Cancel order" +
@@ -272,11 +272,14 @@ public class UserInterface {
             System.out.println("Input out of bound, try again. ");
             input = getIntInput();
         }
+        System.out.println(SEPARATION_LINE);
         return input;
     }
 
     // helper method to determine if user entered "Y" as Yes
     private boolean answerIsYes(){
-        return scanner.nextLine().trim().equalsIgnoreCase("Y");
+        boolean isY = scanner.nextLine().trim().equalsIgnoreCase("Y");
+        System.out.println(SEPARATION_LINE);
+        return isY;
     }
 }

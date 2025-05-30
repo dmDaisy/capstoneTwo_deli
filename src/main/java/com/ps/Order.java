@@ -40,7 +40,7 @@ public class Order {
     public String toString() {
         StringBuilder sb = new StringBuilder("----------Order details----------");
         for (int i = 0; i < cart.size(); i++) {
-            sb.append("\nitem "+ (i + 1) + cart.get(i));
+            sb.append("\nitem "+ (i + 1) + " \uD83D\uDC95" + cart.get(i));
             sb.append("\n" + SEPARATION_LINE);
         }
         sb.append("\nTotal price: $").append(calcTotalPrice());
