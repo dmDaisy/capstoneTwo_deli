@@ -38,7 +38,7 @@ Customization can be made in various ways and all ordered placed are saved in .t
 2. Compile the Java files.
 
     ```bash
-    javac -d out src/main/java/com/ps/*.java
+    javac -d out $(find src -name "*.java")
     ```
 
 3. Run the application.
@@ -51,33 +51,23 @@ Customization can be made in various ways and all ordered placed are saved in .t
 
 Below are a few screenshots of the application in action:
 
-### Buy vehicle
+### Add customized sandwich
 
-![Screenshot 2025-05-16 at 6 43 09 PM](https://github.com/user-attachments/assets/6e48fe29-d098-4ebf-8264-55c660f0a9b7)
+![Uploading Screenshot 2025-05-30 at 12.17.58 AM.png…]()
 
-### Home Screen
+### Add signature sandwich
 
-![Screenshot 2025-05-09 at 11 05 59 PM](https://github.com/user-attachments/assets/3f7bec05-d060-43fe-bae0-bee079606fab)
+![Uploading Screenshot 2025-05-30 at 12.20.09 AM.png…]()
 
+### Add drink
 
-### Search by features example 1
+![Screenshot 2025-05-30 at 12 21 58 AM](https://github.com/user-attachments/assets/c4479c50-a1f2-4252-8770-1eebafe96ac2)
 
-![Screenshot 2025-05-09 at 9 45 21 PM](https://github.com/user-attachments/assets/8679b20c-9fbe-457d-8cbf-49162aff6dea)
+### Checkout
 
+![Screenshot 2025-05-30 at 12 22 35 AM](https://github.com/user-attachments/assets/a42eee3b-a32e-48e5-b2dc-b14d78e59ab7)
 
-### Search by features example 2
-
-![Screenshot 2025-05-09 at 9 46 12 PM](https://github.com/user-attachments/assets/162bb91a-eed3-4425-91d7-5cb7b5ad0454)
-
-
-### Search by features example 3
-
-![Screenshot 2025-05-09 at 9 46 40 PM](https://github.com/user-attachments/assets/060ed825-f33d-4daa-9609-37e42db69a3e)
-
-
-### Invalid input handling
-
-![Screenshot 2025-05-09 at 10 45 46 PM](https://github.com/user-attachments/assets/1cf2aee3-d138-468e-9239-f0ab36f6b917)
+### Program structure diagram
 
 
 
