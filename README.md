@@ -72,20 +72,23 @@ Below are a few screenshots of the application in action:
 
 
 ### Interesting Piece of Code
-**Utilizing super to write fewer lines of code and increase readibility**: When generating CSV entry for `SalesContract` objects, call `super.toCsvEntry()`
-to utilize already-defined method in the parent class to write fewer lines of code and enhance reusability, this is especially helpful for classes with many data fields.
+**Helper method to prompt a choice from a generic ArrayList**: This is helpful for avoiding a super large UserInterface.java file, as well as increasing readibility. 
 
 ```java
-    @Override
-    public String toCsvEntry() {
-        return  String.format(
-                "%s|%.2f|%.2f|%.2f|%.2f|%s|%.2f",
-                super.toCsvEntry(),
-                getSalesTaxAmount(),
-                getRecordingFee(),
-                getProcessingFee(),
-                getTotalPrice(),
-                isFinanced() ? "YES" : "NO",
-                getMonthlyPayment()
-        );
+    // helper method to print chosen array and prompt the user to select
+    // return index of choice in the array,
+    // return -1 if skipped
+    // generic
+    public <T> int selectFromArray(ArrayList<T> list, String description, boolean skippable) throws IOException {
+        String skippableText = skippable ? ", enter 0 to skip or cancel" : "";
+        System.out.println("Select your " + description + skippableText + ": ");
+        printMenu(list);
+        int choice = getIntInput();
+        if(skippable && choice == 0)
+            return -1;
+        while (intOutOfBound(choice, list.size()) || (!skippable && choice == 0)){
+            System.out.println("Input out of bound, try again");
+            choice = getIntInput();
+        }
+        return choice - 1;
     }
