@@ -9,11 +9,26 @@ public class Drink implements Product {
             "Large", 3.0
     );
 
+    public static final ArrayList<String> flavors = new ArrayList<>(
+            Arrays.asList(
+                    "Coke",
+                    "Diet Coke",
+                    "Lime",
+                    "Orange",
+                    "Seltzer",
+                    "Tea"
+            )
+    );
+
     public static final ArrayList<String> sizes = new ArrayList<>(SIZE_PRICES_MAP.keySet());
 
     private String size;
+    private String flavor;
 
-    public Drink(String size) { this.size = size; }
+    public Drink(String size, String falvor) {
+        this.size = size;
+        this.flavor = falvor;
+    }
 
     public String getSize() {
         return size;
@@ -26,5 +41,10 @@ public class Drink implements Product {
     @Override
     public double calcPrice() {
         return SIZE_PRICES_MAP.get(size);
+    }
+
+    @Override
+    public String toString() {
+        return "\n1 " + size + " " + flavor + " $" + calcPrice();
     }
 }

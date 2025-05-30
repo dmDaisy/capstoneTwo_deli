@@ -10,9 +10,9 @@ public class Sandwich implements Product {
     public static final String PACKAGE_NAME = "com.ps.products";
     public static final ArrayList<String> sizes = new ArrayList<>(
             Arrays.asList(
-                "Small",
-                "Medium",
-                "Large"
+                "Small 4",
+                "Medium 8",
+                "Large 12"
             )
     );
     public static final ArrayList<String> breads = new ArrayList<>(
@@ -87,12 +87,17 @@ public class Sandwich implements Product {
         this.toasted = toasted;
     }
 
+    public void addTopping(Topping topping){
+        toppings.add(topping);
+    }
+
     @Override
     public String toString() {
-        return "Bread type: " + bread + "\n" +
+        return "\nSandwich\n" +
+                "Bread type: " + bread + "\n" +
                 "Size: " + size + "\n" +
                 "Toasted: " + (toasted ? "Yes" : "No") + "\n" +
                 "Toppings: " + toppings + "\n" +
-                "Price: " + calcPrice();
+                "Sandwich price: $" + calcPrice();
     }
 }

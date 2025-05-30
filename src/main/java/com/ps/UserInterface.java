@@ -6,6 +6,7 @@ import com.ps.toppings.*;
 import java.io.*;
 import java.lang.*;
 import java.util.*;
+import java.util.stream.*;
 
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
@@ -25,15 +26,12 @@ public class UserInterface {
         while (running){
             System.out.println("Welcome to the \"DELI-cious\" home page!" +
                     "\n1) New Order" +
-                    "\n2) Search order by phone number" +
                     "\n0) Exit" +
                     "\nChoose your option: ");
             choice = getIntInput();
             switch (choice){
                 case 1:
                     processNewOrderRequest();
-                    break;
-                case 2:
                     break;
                 case 0:
                     System.out.println("Thank you for using our app, see you again! ");
@@ -46,8 +44,9 @@ public class UserInterface {
     }
 
     private void processNewOrderRequest() throws Exception {
+
         order = new Order(new ArrayList<>());
-        // home page
+
         int choice;
         boolean running = true;
         while (running){
@@ -74,12 +73,12 @@ public class UserInterface {
                     processAddChipsRequest();
                     break;
                 case 5:
-                    processCheckoutRequest();
-                    running = false;
-                    System.out.println("Going back to home page...");
+                    if(processCheckoutRequest()){
+                        running = false;
+                        System.out.println("Going back to home page...");
+                    }
                     break;
                 case 0:
-                    order = null;
                     running = false;
                     System.out.println("Order cancelled. Going back to home page...");
                     break;
@@ -144,55 +143,78 @@ public class UserInterface {
     }
 
     private void processAddSignatureSandwichRequest() throws Exception {
-//        int choiceIndex = selectFromArray(Sandwich.signatureSandwichs, "signature sandwich", true);
-//        if(choiceIndex < 0)
-//            return;
-//        String className = Sandwich.signatureSandwichs.get(choiceIndex);
-//        String packageName = Sandwich.PACKAGE_NAME;
-//        String fullClassName = packageName + "." + className;
-//        try {
-//            Class<?> clazz = Class.forName(fullClassName);
-//            Constructor<?> constructor = clazz.getConstructor(String.class);
-//            Object signatureSandwich = constructor.newInstance();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        // get array list of names of signature sandwiches
+        ArrayList<String> names = SignatureSandwich.getMenu().stream()
+                .map(SignatureSandwich::getSignatureName)
+                .collect(Collectors.toCollection(ArrayList::new));
+        int choiceIndex = selectFromArray(names, "signature sandwich", true);
+        if(choiceIndex < 0) // didn't choose
+            return;
+        // get a clone of the chosen signature sandwich
+        SignatureSandwich chosen = SignatureSandwich.getMenu().get(choiceIndex).clone();
+        // customization
+        customizeSandwich(chosen);
+        order.getCart().add(chosen);
+        System.out.println("The following sandwich is added to your order: " + "\n" + chosen);
+    }
+
+    private void customizeSandwich(Sandwich sandwich) throws IOException {
+        // remove topping(s)
+        System.out.println("Would you like to remove topping(s)? (Y)");
+        if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
+            int choiceIndex = 999;
+            while (choiceIndex >= 0 && !sandwich.getToppings().isEmpty()){
+                choiceIndex = selectFromArray(sandwich.getToppings(), "topping(s) to remove", true);
+                if(choiceIndex < 0)
+                    break;
+                sandwich.getToppings().remove(choiceIndex);
+            }
+        }
+        // add topping(s)
+        System.out.println("Would you like to add topping(s)? (Y)");
+        if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
+            sandwich.getToppings().addAll(processSelectToppingsRequest());
+        }
     }
 
     private void processAddDrinkRequest() throws IOException {
         int choiceIndex = selectFromArray(Drink.sizes, "drink", true);
-        if(choiceIndex < 0)
+        if(choiceIndex < 0) // didn't choose
             return;
-        order.getCart().add(new Drink(Drink.sizes.get(choiceIndex)));
+        int flavorIndex = selectFromArray(Drink.flavors, "flavor", false);
+        order.getCart().add(new Drink(Drink.sizes.get(choiceIndex), Drink.flavors.get(flavorIndex)));
         System.out.println("Drink added. ");
     }
 
-    private void processAddChipsRequest(){
-        System.out.println("Enter Y to confirm adding 1 bag of chips. ");
-        if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
-            order.getCart().add(new Chips());
-            System.out.println("1 bag of chips added. ");
-        }
+    private void processAddChipsRequest() throws IOException {
+        int flavorIndex = selectFromArray(Chips.flavors, "chips flavor", true);
+        if(flavorIndex < 0) // didn't choose
+            return;
+        order.getCart().add(new Chips(Chips.flavors.get(flavorIndex)));
+        System.out.println("1 bag of chips added. ");
     }
 
-    // return: checkout(boolean)
-    private void processCheckoutRequest(){
+    // return: can go back to home page (boolean)
+    private boolean processCheckoutRequest(){
         if(order.getCart().isEmpty()){
-            System.out.println("Nothing added yet, going back to home page...");
-            order = null;
-            return;
+            System.out.println("Nothing added yet :(");
+            return false;
         }
         System.out.println(order);
-        System.out.println("Enter Y to confirm checkout, or 0 to cancel: ");
-        if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
+        System.out.println("Enter Y to confirm checkout, C to cancel, or anything else to go back to add more to your order: ");
+        String choice = scanner.nextLine().trim().toUpperCase();
+        if(choice.equalsIgnoreCase("Y")){ // confirm checkout
             OrderFileManager.writeReceipt(order);
             System.out.println("Checkout confirmed. ");
+            return true;
+        }
+        else if(choice.equalsIgnoreCase("C")){ // order cancelled
+            System.out.println("Order cancelled. ");
+            return true;
         }
         else{
-            System.out.println("Order cancelled. ");
+            return false;
         }
-        order = null;
     }
 
     // helper method to get user int input and consumes redundant \n
@@ -210,9 +232,9 @@ public class UserInterface {
     // return index of choice in the array,
     // return -1 if skipped
     // generic
-    public <T> int selectFromArray(ArrayList<T> list, String type, boolean skippable) throws IOException {
+    public <T> int selectFromArray(ArrayList<T> list, String description, boolean skippable) throws IOException {
         String skippableText = skippable ? ", enter 0 to skip or cancel" : "";
-        System.out.println("Select your " + type + skippableText + ": ");
+        System.out.println("Select your " + description + skippableText + ": ");
         printMenu(list);
         int choice = getIntInput();
         if(skippable && choice == 0)
@@ -237,4 +259,3 @@ public class UserInterface {
         return index < 1 || index > arraySize;
     }
 }
-

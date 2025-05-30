@@ -37,9 +37,12 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order details: " +
-                "\nPhone number: " + phoneNumber +
-                "\nItems ordered: " + cart +
-                "\nTotal price: " + calcTotalPrice();
+        StringBuilder sb = new StringBuilder("----------Order details----------");
+        for (int i = 0; i < cart.size(); i++) {
+            sb.append(cart.get(i));
+            sb.append("\n------------------------------");
+        }
+        sb.append("\nTotal price: $").append(calcTotalPrice());
+        return sb.toString();
     }
 }
