@@ -104,7 +104,7 @@ public class UserInterface {
         boolean toasted = (scanner.nextLine().trim().equalsIgnoreCase("Y"));
 
         Sandwich sandwich = new Sandwich(bread, size, toppings, toasted);
-        order.getCart().add(sandwich);
+        order.getCart().add(0, sandwich);
         System.out.println("The following sandwich is added to your order: " + "\n" + SEPARATION_LINE + sandwich);
     }
 
@@ -121,15 +121,18 @@ public class UserInterface {
 
     // select and append premium toppings to a given arrayList of Toppings
     private void addPremiumToppings(ArrayList<Topping> addToArray, ArrayList<String> selectFromArray, String type) throws IOException {
-        int choiceIndex = selectFromArray(selectFromArray, type, true);
-        if(choiceIndex < 0)
-            return;
-        String name = selectFromArray.get(choiceIndex);
-        addToArray.add(new PremiumTopping(name, false));
-        System.out.println("Would you like extra? (Y)");
-        String input = scanner.nextLine().trim().toUpperCase();
-        if(input.equalsIgnoreCase("Y"))
-            addToArray.add(new PremiumTopping(name, true));
+        int choiceIndex;
+        while (true){
+            choiceIndex = selectFromArray(selectFromArray, type, true);
+            if(choiceIndex < 0)
+                return;
+            String name = selectFromArray.get(choiceIndex);
+            addToArray.add(new PremiumTopping(name, false));
+            System.out.println("Would you like extra? (Y)");
+            String input = scanner.nextLine().trim().toUpperCase();
+            if(input.equalsIgnoreCase("Y"))
+                addToArray.add(new PremiumTopping(name, true));
+        }
     }
 
     // select and append regular toppings to a given arrayList of Toppings
@@ -155,7 +158,7 @@ public class UserInterface {
         System.out.println("Here are the " + chosen.getSignatureName() + " sandwich details: \n" + SEPARATION_LINE + chosen);
         // customization
         customizeSandwich(chosen);
-        order.getCart().add(chosen);
+        order.getCart().add(0, chosen);
         System.out.println("The following sandwich is added to your order: " + "\n" + SEPARATION_LINE + chosen);
     }
 
@@ -185,7 +188,7 @@ public class UserInterface {
         if(choiceIndex < 0) // didn't choose
             return;
         int flavorIndex = selectFromArray(Drink.flavors, "flavor", false);
-        order.getCart().add(new Drink(Drink.sizes.get(choiceIndex), Drink.flavors.get(flavorIndex)));
+        order.getCart().add(0, new Drink(Drink.sizes.get(choiceIndex), Drink.flavors.get(flavorIndex)));
         System.out.println("Drink added. ");
     }
 
@@ -193,7 +196,7 @@ public class UserInterface {
         int flavorIndex = selectFromArray(Chips.flavors, "chips flavor", true);
         if(flavorIndex < 0) // didn't choose
             return;
-        order.getCart().add(new Chips(Chips.flavors.get(flavorIndex)));
+        order.getCart().add(0, new Chips(Chips.flavors.get(flavorIndex)));
         System.out.println("1 bag of chips added. ");
     }
 
@@ -203,21 +206,40 @@ public class UserInterface {
             System.out.println("Nothing added yet :(");
             return false;
         }
-        System.out.println(order);
-        System.out.println("Enter Y to confirm checkout, C to cancel, or anything else to go back to add more to your order: ");
-        String choice = scanner.nextLine().trim().toUpperCase();
-        if(choice.equalsIgnoreCase("Y")){ // confirm checkout
-            OrderFileManager.writeReceipt(order);
-            System.out.println("Checkout confirmed. ");
-            return true;
+
+        int input;
+        boolean running = true;
+        while (running){
+            System.out.println(order);
+            System.out.println(SEPARATION_LINE + "\nMake your choice:" +
+                    "\n1) Confirm checkout" +
+                    "\n2) Remove an item" +
+                    "\n2) Cancel order" +
+                    "\n4) Go back to add more");
+            input = getInBoundIntInput(1, 4);
+            switch (input){
+                case 1:
+                    OrderFileManager.writeReceipt(order);
+                    System.out.println("Checkout confirmed. ");
+                    return true;
+                case 2:
+                    processRemoveFromOrderRequest();
+                    break;
+                case 3:
+                    System.out.println("Order cancelled. ");
+                    return true;
+                case 4:
+                    return false;
+                default:
+            }
         }
-        else if(choice.equalsIgnoreCase("C")){ // order cancelled
-            System.out.println("Order cancelled. ");
-            return true;
-        }
-        else{
-            return false;
-        }
+        return false;
+    }
+
+    private void processRemoveFromOrderRequest(){
+        System.out.println("Choose the number of the item to remove: ");
+        int choice = getInBoundIntInput(1, order.getCart().size());
+        order.getCart().remove(choice - 1);
     }
 
     // helper method to get user int input and consumes redundant \n
@@ -262,7 +284,7 @@ public class UserInterface {
         return index < 1 || index > arraySize;
     }
 
-    // [min, max] inclusive
+    // helper method to ensure to get an int input between [min, max] inclusively
     private int getInBoundIntInput(int min, int max){
         int input = getIntInput();
         while (input < min || input > max){

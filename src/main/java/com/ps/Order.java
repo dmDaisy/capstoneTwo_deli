@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Order {
     private int phoneNumber;
     private ArrayList<Product> cart;
+    private final String SEPARATION_LINE = "------------------------------";
 
     public Order(ArrayList<Product> cart) {
         this.phoneNumber = 0;
@@ -39,8 +40,8 @@ public class Order {
     public String toString() {
         StringBuilder sb = new StringBuilder("----------Order details----------");
         for (int i = 0; i < cart.size(); i++) {
-            sb.append(cart.get(i));
-            sb.append("\n------------------------------");
+            sb.append("\nitem "+ (i + 1) + cart.get(i));
+            sb.append("\n" + SEPARATION_LINE);
         }
         sb.append("\nTotal price: $").append(calcTotalPrice());
         return sb.toString();
