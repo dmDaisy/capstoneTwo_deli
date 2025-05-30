@@ -155,7 +155,7 @@ public class UserInterface {
         // customization
         customizeSandwich(chosen);
         order.getCart().add(0, chosen);
-        System.out.println("The following sandwich is added to your order: " + SEPARATION_LINE + chosen);
+        System.out.println("The following sandwich is added to your order: \n" + SEPARATION_LINE + chosen);
     }
 
     private void customizeSandwich(Sandwich sandwich) throws IOException {
@@ -215,13 +215,15 @@ public class UserInterface {
             input = getInBoundIntInput(1, 4);
             switch (input){
                 case 1:
+                    if(order.getCart().isEmpty()){
+                        System.out.println("Nothing to checkout :(");
+                        break;
+                    }
                     OrderFileManager.writeReceipt(order);
                     System.out.println("Checkout confirmed. ");
                     return true;
                 case 2:
-                    System.out.println("Choose the number of the item to remove: ");
-                    int choice = getInBoundIntInput(1, order.getCart().size());
-                    order.getCart().remove(choice - 1);
+                    processRemoveFromOrderRequest();
                     break;
                 case 3:
                     System.out.println("Order cancelled. ");
@@ -232,6 +234,16 @@ public class UserInterface {
             }
         }
         return false;
+    }
+
+    private void processRemoveFromOrderRequest(){
+        if(order.getCart().isEmpty()){
+            System.out.println("Nothing to remove :(");
+            return;
+        }
+        System.out.println("Choose the number of the item to remove: ");
+        int choice = getInBoundIntInput(1, order.getCart().size());
+        order.getCart().remove(choice - 1);
     }
 
     // helper method to print chosen array and prompt the user to select
