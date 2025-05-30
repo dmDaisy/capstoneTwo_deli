@@ -10,6 +10,7 @@ import java.util.stream.*;
 
 public class UserInterface {
     private final Scanner scanner = new Scanner(System.in);
+    private final String SEPARATION_LINE = "------------------------------";
     private Order order;
 
     public UserInterface(){
@@ -24,7 +25,7 @@ public class UserInterface {
         int choice;
         boolean running = true;
         while (running){
-            System.out.println("Welcome to the \"DELI-cious\" home page!" +
+            System.out.println(SEPARATION_LINE + "\nWelcome to the \"DELI-cious\" home page!" +
                     "\n1) New Order" +
                     "\n0) Exit" +
                     "\nChoose your option: ");
@@ -50,7 +51,7 @@ public class UserInterface {
         int choice;
         boolean running = true;
         while (running){
-            System.out.println("\nWelcome to order page! " +
+            System.out.println(SEPARATION_LINE + "\nWelcome to order page! " +
                     "\n1) Add sandwich" +
                     "\n2) Add a signature sandwich" +
                     "\n3) Add drink" +
@@ -104,7 +105,7 @@ public class UserInterface {
 
         Sandwich sandwich = new Sandwich(bread, size, toppings, toasted);
         order.getCart().add(sandwich);
-        System.out.println("The following sandwich is added to your order: " + "\n" + sandwich);
+        System.out.println("The following sandwich is added to your order: " + "\n" + SEPARATION_LINE + sandwich);
     }
 
     private ArrayList<Topping> processSelectToppingsRequest() throws IOException {
@@ -132,13 +133,12 @@ public class UserInterface {
     }
 
     // select and append regular toppings to a given arrayList of Toppings
-    private void addRegularToppings(ArrayList<Topping> results, ArrayList<String> selectFromArray, String type) throws IOException {
+    private void addRegularToppings(ArrayList<Topping> addToArray, ArrayList<String> selectFromArray, String type) throws IOException {
         int choiceIndex = selectFromArray(selectFromArray, type, true);
         while (choiceIndex >= 0){
-            String name = selectFromArray.get(choiceIndex);
-            results.add(new RegularTopping(name));
+            addToArray.add(new RegularTopping(selectFromArray.get(choiceIndex)));
             System.out.println("What else would you like? Enter 0 when you've finished. ");
-            choiceIndex = getIntInput() - 1;
+            choiceIndex = getInBoundIntInput(0, selectFromArray.size()) - 1;
         }
     }
 
@@ -152,10 +152,11 @@ public class UserInterface {
             return;
         // get a clone of the chosen signature sandwich
         SignatureSandwich chosen = SignatureSandwich.getMenu().get(choiceIndex).clone();
+        System.out.println("Here are the " + chosen.getSignatureName() + " sandwich details: \n" + SEPARATION_LINE + chosen);
         // customization
         customizeSandwich(chosen);
         order.getCart().add(chosen);
-        System.out.println("The following sandwich is added to your order: " + "\n" + chosen);
+        System.out.println("The following sandwich is added to your order: " + "\n" + SEPARATION_LINE + chosen);
     }
 
     private void customizeSandwich(Sandwich sandwich) throws IOException {
@@ -163,7 +164,7 @@ public class UserInterface {
         System.out.println("Would you like to remove topping(s)? (Y)");
         if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
             int choiceIndex = 999;
-            while (choiceIndex >= 0 && !sandwich.getToppings().isEmpty()){
+            while (!sandwich.getToppings().isEmpty()){
                 choiceIndex = selectFromArray(sandwich.getToppings(), "topping(s) to remove", true);
                 if(choiceIndex < 0)
                     break;
@@ -172,9 +173,11 @@ public class UserInterface {
         }
         // add topping(s)
         System.out.println("Would you like to add topping(s)? (Y)");
-        if(scanner.nextLine().trim().equalsIgnoreCase("Y")){
+        if(scanner.nextLine().trim().equalsIgnoreCase("Y")) {
             sandwich.getToppings().addAll(processSelectToppingsRequest());
         }
+
+        sandwich.sortToppings();
     }
 
     private void processAddDrinkRequest() throws IOException {
@@ -257,5 +260,15 @@ public class UserInterface {
     // helper method to check if an int inpput is out of range of [1, arraySize], inclusively
     private boolean intOutOfBound(int index, int arraySize){
         return index < 1 || index > arraySize;
+    }
+
+    // [min, max] inclusive
+    private int getInBoundIntInput(int min, int max){
+        int input = getIntInput();
+        while (input < min || input > max){
+            System.out.println("Input out of bound, try again. ");
+            input = getIntInput();
+        }
+        return input;
     }
 }

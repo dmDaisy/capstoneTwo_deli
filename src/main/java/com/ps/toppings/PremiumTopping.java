@@ -15,10 +15,10 @@ public class PremiumTopping extends Topping {
     );
     public static final ArrayList<String> cheeseToppings = new ArrayList<>(
             Arrays.asList(
-                    "American",
-                    "Provolone",
-                    "Cheddar",
-                    "Swiss"
+                    "American Cheese",
+                    "Provolone Cheese",
+                    "Cheddar Cheese",
+                    "Swiss Cheese"
             )
     );
     private final double MEAT_BASE_PRICE = 1;

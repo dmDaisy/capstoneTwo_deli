@@ -44,9 +44,9 @@ public class SignatureSandwich extends Sandwich{
                 8,
                 new ArrayList<>(Arrays.asList(
                         new PremiumTopping("Bacon", false),
-                        new PremiumTopping("Cheddar", false),
+                        new PremiumTopping("Cheddar Cheese", false),
                         new RegularTopping("Lettuce"),
-                        new RegularTopping("Tomato"),
+                        new RegularTopping("Tomatoes"),
                         new RegularTopping("Ranch")
                 )),
                 true,
@@ -58,7 +58,7 @@ public class SignatureSandwich extends Sandwich{
                 8,
                 new ArrayList<>(Arrays.asList(
                         new PremiumTopping("Steak", false),
-                        new PremiumTopping("American", false),
+                        new PremiumTopping("American Cheese", false),
                         new RegularTopping("Peppers"),
                         new RegularTopping("Mayo")
                 )),
@@ -71,7 +71,7 @@ public class SignatureSandwich extends Sandwich{
                 8,
                 new ArrayList<>(Arrays.asList(
                         new PremiumTopping("Steak", false),
-                        new PremiumTopping("American", false),
+                        new PremiumTopping("American Cheese", false),
                         new RegularTopping("Onions"),
                         new RegularTopping("Ketchup")
                 )),
