@@ -53,11 +53,12 @@ Below are a few screenshots of the application in action:
 
 ### Add customized sandwich
 
-![Uploading Screenshot 2025-05-30 at 12.17.58 AM.png…]()
+![Screenshot 2025-05-30 at 12 35 50 AM](https://github.com/user-attachments/assets/15ede19a-caff-41db-aedf-edf20d0ed045)
+
 
 ### Add signature sandwich
 
-![Uploading Screenshot 2025-05-30 at 12.20.09 AM.png…]()
+![Screenshot 2025-05-30 at 12 36 24 AM](https://github.com/user-attachments/assets/0329d9e3-40ff-402f-8e58-28e51ca78658)
 
 ### Add drink
 
