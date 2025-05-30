@@ -70,6 +70,7 @@ Below are a few screenshots of the application in action:
 
 ### Program structure diagram
 
+![image](https://github.com/user-attachments/assets/ac5fd23c-279c-4322-b39d-0aa1db867cd4)
 
 
 ### Interesting Piece of Code
