@@ -21,6 +21,7 @@ Customization can be made in various ways and all ordered placed are saved in .t
     - Remove item(s) from order
     - Go back to add more
 - **Save Receipts**: To .txt files.
+- **Completely foolproof**: All invalid inputs are handled gracefully, no exception throwing.
 
 ## Requirements
 
@@ -74,7 +75,8 @@ Below are a few screenshots of the application in action:
 
 
 ### Interesting Piece of Code
-**Helper method to prompt a choice from a generic ArrayList**: This is helpful for avoiding a super large UserInterface.java file, as well as increasing readibility. 
+**Helper method to prompt a choice from a generic ArrayList**: In order to write fewer lines of code to reduce the size of 
+UserInterface.java file, instead of manually printing large menus. 
 
 ```java
     // helper method to print chosen array and prompt the user to select
@@ -85,12 +87,6 @@ Below are a few screenshots of the application in action:
         String skippableText = skippable ? ", enter 0 to skip or cancel" : "";
         System.out.println("Select your " + description + skippableText + ": ");
         printMenu(list);
-        int choice = getIntInput();
-        if(skippable && choice == 0)
-            return -1;
-        while (intOutOfBound(choice, list.size()) || (!skippable && choice == 0)){
-            System.out.println("Input out of bound, try again");
-            choice = getIntInput();
-        }
-        return choice - 1;
+        int min = skippable ? 0 : 1;
+        return getInBoundIntInput(min, list.size()) - 1;
     }
